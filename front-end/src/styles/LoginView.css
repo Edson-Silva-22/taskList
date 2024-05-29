@@ -1,0 +1,62 @@
+.logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.icon{
+    font-size: clamp(1rem, 5vw + 1rem, 5rem);
+    
+    max-width: 5rem;
+    background-color: #0D47A1;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 2px 2px 3px 3px rgb(231, 231, 231);
+}
+
+.logo > h1 {
+    font-size: clamp(1rem, 5vw + 1rem, 5rem);
+    color: #0D47A1;
+}
+
+.form{
+    width: 80%;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 2px 2px 3px 3px #0a3b85;
+    max-width: 40rem;
+}
+
+.h2{
+    height: 5rem;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+}
+
+.textField{
+    margin-bottom: 2rem;
+}
+
+.div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.resetPass{
+    color: #0D47A1;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 2rem;
+    cursor: pointer;
+}
+
+.resetPass:hover{
+    color: #0a3b85;
+}
+
+.containerModal{
+    max-width: 50rem;
+}

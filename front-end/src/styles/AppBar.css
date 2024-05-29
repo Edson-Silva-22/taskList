@@ -1,0 +1,26 @@
+header {
+    position: fixed !important;
+}
+
+.containerModal {
+    max-width: 30rem;
+}
+
+.v-img{
+    width: 20rem;
+    height: 20rem;
+    margin: auto;
+    border-radius: 50%;
+}
+
+.divBtn{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.divBtn > * {
+    width: 40% !important;
+    height: 3rem !important;
+}
