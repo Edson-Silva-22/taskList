@@ -1,11 +1,16 @@
 <template>
   <v-app-bar color="blue-darken-4">
-    <v-app-bar-title
-      class="cursor-pointer"
-      @click="router.push('/')"
-    >My Task</v-app-bar-title>
+    <v-app-bar-title>
+      <span class="cursor-pointer" @click="router.push('/')">My Task</span>
+    </v-app-bar-title>
 
     <template v-slot:append>
+      <v-btn 
+        v-show="auth.userAuth.roles.some((role:string) => role === 'admin')"
+        class="btnMenu" 
+        to="/users"
+      >usuários</v-btn>
+
       <!-- lista de notificações -->
       <v-menu>
         <template v-slot:activator="{props}">

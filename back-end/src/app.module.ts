@@ -8,6 +8,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSourceOptions } from './database/typeormConfig';
 import { ScheduleModule } from '@nestjs/schedule';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { RolesGuard } from './authorization/roles.guard';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthorizationModule } from './authorization/authorization.module';
 require('dotenv').config();
 
 @Module({
@@ -27,8 +30,15 @@ require('dotenv').config();
     UsersModule, 
     AuthModule, 
     TasksModule,
+    AuthorizationModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
 export class AppModule {}

@@ -2,6 +2,12 @@ header {
     position: fixed !important;
 }
 
+.btnMenu{
+  text-transform: capitalize;
+  height: 100% !important;
+  font-size: 16px;
+}
+
 .containerModal {
     max-width: 30rem;
 }

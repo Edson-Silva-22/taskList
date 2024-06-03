@@ -8,6 +8,11 @@ export const useUserStore = defineStore('user', () => {
     return response
   }
 
+  async function findAll(queryString:any) {
+    const response = await useApi('get', `users/?userId=${queryString.userId}${queryString.nameFilter ? `&&nameFilter=${queryString.nameFilter}` : ''}`)
+    return response
+  }
+
   async function findOne(id:number) {
     const response = await useApi('get', `users/${id}`)
     return response
@@ -25,10 +30,17 @@ export const useUserStore = defineStore('user', () => {
     return response
   }
 
+  async function remove(id:number) {
+    const response = await useApi('delete', `users/${id}`)
+    return response
+  }
+
   return {
     create,
+    findAll,
     findOne,
     update,
-    profilePicture
+    profilePicture,
+    remove
   }
 })

@@ -77,6 +77,9 @@ export class AuthService {
           where: {
             id: validateToken.sub
           },
+          relations: {
+            roles: true
+          },
           select: {
             id: true,
             nome: true,
@@ -84,10 +87,14 @@ export class AuthService {
             photo: true 
           }
         })
+        
+        //pegando os roles desse usuário
+        const userRoles = user.roles.map((r) => r.role)
+        
         return {
           result: {
             valid: true,
-            user
+            user: {...user, roles: userRoles}
           },
           status: 200
         }

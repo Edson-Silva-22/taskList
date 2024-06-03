@@ -6,6 +6,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from 'src/entities/user.entity';
 import { createClient } from '@supabase/supabase-js';
+import { Role } from 'src/entities/role.entity';
+import { RoleType } from 'src/authorization/roleType.enum';
 
 @Injectable()
 export class UsersService {
@@ -13,6 +15,8 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+    @InjectRepository(Role)
+    private roleRepository: Repository<Role>
   ){}
 
   async create(createUserDto: CreateUserDto) {
@@ -42,6 +46,13 @@ export class UsersService {
       })
 
       const result = await this.usersRepository.save(createUser)
+      //salvando como usuário comum
+      const createRole = this.roleRepository.create({
+        role: RoleType.User,
+        user: result
+      })
+
+      await this.roleRepository.save(createRole)
 
       return {
         result,
@@ -118,7 +129,12 @@ export class UsersService {
 
   async findAll() {
     try {
-      const result = await this.usersRepository.find()
+      const result = await this.usersRepository.find({
+        relations: {roles: true},
+        select: {
+          roles: { role: true}
+        }
+      })
 
       return {
         result,

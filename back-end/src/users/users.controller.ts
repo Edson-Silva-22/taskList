@@ -6,6 +6,8 @@ import { Response } from 'express';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileValidationPipe } from './pipes/file-validation.pipe';
+import { Roles } from 'src/authorization/roles.decorator';
+import { RoleType } from 'src/authorization/roleType.enum';
 
 @Controller('users')
 export class UsersController {
@@ -28,6 +30,8 @@ export class UsersController {
     return response.status(result.status).json(result)
   }
 
+  @UseGuards(AuthGuard)
+  @Roles(RoleType.Admin)
   @Get()
   async findAll(@Res() response: Response) {
     const result = await this.usersService.findAll();

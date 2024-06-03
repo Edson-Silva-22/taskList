@@ -13,12 +13,13 @@ import {
     constructor(private jwtService: JwtService) {}
   
     async canActivate(context: ExecutionContext): Promise<boolean> {
-      const request = context.switchToHttp().getRequest();
-      const token = this.extractTokenFromHeader(request);
-      if (!token) {
-        throw new UnauthorizedException({message: 'Não autorizado', status: 401});
-      }
       try {
+        const request = context.switchToHttp().getRequest();
+        const token = this.extractTokenFromHeader(request);
+        if (!token) {
+          throw new UnauthorizedException({message: 'Não autorizado', status: 401});
+        }
+  
         const payload = await this.jwtService.verifyAsync(
           token,
           {
@@ -28,10 +29,16 @@ import {
         // 💡 We're assigning the payload to the request object here
         // so that we can access it in our route handlers
         request['user'] = payload;
-      } catch {
-        throw new UnauthorizedException();
+  
+        return true;
+      } catch (error) {
+        console.error(error)
+        if (error == 'TokenExpiredError: jwt expired') {
+          throw new UnauthorizedException({message: 'Sessão expirada.', status: 401});
+        }
+
+        throw new UnauthorizedException({message: 'Não autorizado', status: 401});
       }
-      return true;
     }
   
     private extractTokenFromHeader(request: Request): string | undefined {
