@@ -44,9 +44,10 @@ export async function useApi(method:'get'|'post'|'put'|'delete'|'options'|'patch
         })
       }
 
-      else if (error.response.data.message == 'Unauthorized') {
+      //quando o erro for de sessão expirada
+      else if (error.response.data.message == 'Sessão expirada.') {
         window.location.reload()
-        useAlert.createAlert('Sessão expirada', 'error')
+        useAlert.createAlert('Sessão expirada.', 'error')
       }
 
       //Quando houver uma mensagem de erro

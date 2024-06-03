@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Task } from "./task.entity";
+import { Role } from "./role.entity";
 
 @Entity({name: 'users'})
 export class User {
@@ -42,4 +43,7 @@ export class User {
 
     @OneToMany(() => Task, (task) => task.user)
     tasks: Task[]
+
+    @OneToMany(() => Role, (role) => role.user)
+    roles: Role[]
 }
